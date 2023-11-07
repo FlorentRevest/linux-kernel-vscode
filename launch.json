@@ -1,0 +1,72 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Start and debug kernel in a VM",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "Start virtual machine",
+      "internalConsoleOptions": "neverOpen",
+
+      "miDebuggerPath": "gdb-multiarch",
+      "miDebuggerServerAddress": "localhost:1234",
+      "setupCommands": [
+        {
+          "description": "Give some time for the VM to spin-up",
+          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "ignoreFailures": false,
+        },
+      ],
+
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceRoot}/vmlinux",
+
+      "hardwareBreakpoints": { "require": true },
+    },
+    {
+      "name": "Start and debug kernel in a VM from early-boot",
+      "type": "cppdbg",
+      "request": "launch",
+      "preLaunchTask": "Start virtual machine waiting for debugger",
+      "internalConsoleOptions": "neverOpen",
+
+      "miDebuggerPath": "gdb-multiarch",
+      "miDebuggerServerAddress": "localhost:1234",
+      "setupCommands": [
+        {
+          "description": "Give some time for the VM to spin-up",
+          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "ignoreFailures": true
+        },
+      ],
+
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceRoot}/vmlinux",
+
+      "hardwareBreakpoints": {
+        "require": true,
+      },
+    },
+    {
+      "name": "Debug kernel in an already-running VM",
+      "type": "cppdbg",
+      "request": "launch",
+      "internalConsoleOptions": "neverOpen",
+
+      "miDebuggerPath": "gdb-multiarch",
+      "miDebuggerServerAddress": "localhost:1234",
+      "setupCommands": [
+        {
+          "description": "Wait for the VM to spin-up",
+          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "ignoreFailures": false,
+        },
+      ],
+
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceRoot}/vmlinux",
+
+      "hardwareBreakpoints": { "require": true },
+    }
+  ]
+}

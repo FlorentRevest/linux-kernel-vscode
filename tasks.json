@@ -1,0 +1,135 @@
+{
+  "version": "2.0.0",
+
+  // All tasks in this file inherit the following top-level fields. These can be
+  // shared because all tasks are implemented in the tasks.sh shell script.
+  "type": "shell",
+  "command": ".vscode/tasks.sh",
+  "presentation": {
+    // Do not have VSCode print ".vscode/tasks.sh task" everytime a task is run.
+    // We can let tasks.sh print something more useful instead.
+    "echo": false,
+  },
+  "problemMatcher": [],
+
+  // Because of the above, most task definitions only need to map user-readable
+  // UI labels (what shows under the Ctrl+Shift+P -> "Tasks: Run task" submenu)
+  // to an argument for the tasks.sh script that identifies the task to run.
+  "tasks": [
+    {
+      "label": "Create rootfs for virtual machine if absent",
+      "args": ["create-rootfs"],
+    },
+    {
+      "label": "Compile and install autostart",
+      "args": ["install-autostart"],
+    },
+    {
+      "label": "Start virtual machine",
+      "args": ["start"],
+      "presentation": {
+        "focus": true,
+      },
+      "isBackground": true,
+      // For this task to be a background task of a launch.json debugger setup,
+      // a non-empty problem matcher must be defined. This is just a dummy one.
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3,
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": ".",
+          }
+        }
+      ],
+    },
+    {
+      "label": "Start virtual machine waiting for debugger",
+      "args": ["start-wait-dbg"],
+      "presentation": {
+        "focus": true,
+      },
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3,
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".",
+            "endsPattern": ".",
+          }
+        }
+      ],
+    },
+    {
+      "label": "Stop virtual machine",
+      "args": ["stop"],
+    },
+    {
+      "label": "SSH into the virtual machine",
+      "args": ["ssh"],
+      "presentation": {
+        "focus": true,
+      },
+    },
+    {
+      "label": "Create .config for virtual machine if absent",
+      "args": ["defconfig"],
+    },
+    {
+      "label": "Build kernel",
+      "args": ["build"],
+      // Map this task to the Ctrl+Shift+P -> "Run build task" command.
+      "group": {
+        "kind": "build",
+        "isDefault": true,
+      },
+    },
+    {
+      "label": "Menuconfig",
+      "args": ["menuconfig"],
+      "presentation": {
+        "focus": true,
+      },
+    },
+    {
+      "label": "Make clean",
+      "args": ["clean"],
+    },
+    {
+      "label": "Chroot into the virtual machine's rootfs",
+      "args": ["chroot"],
+    },
+    {
+      "label": "Compile and install BPF selftests",
+      "args": ["install-bpf-selftests"],
+    },
+    {
+      "label": "Run BPF selftests",
+      "args": ["run-bpf-selftests"],
+    },
+    {
+      "label": "Run BPF selftests in this file",
+      "args": ["run-bpf-selftests", "${file}"],
+    },
+    {
+      "label": "Update linux-kernel-vscode setup",
+      "args": ["update"],
+    }
+  ]
+}
