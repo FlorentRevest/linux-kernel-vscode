@@ -67,14 +67,14 @@ sudo sysctl -p
 Inside a fresh linux kernel tree, e.g.:
 
 ```shell
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 cd linux
 ```
 
 Create a `.vscode` directory with our config files inside:
 
 ```shell
-git clone git://github.com/FlorentRevest/linux-kernel-vscode .vscode/
+git clone https://github.com/FlorentRevest/linux-kernel-vscode .vscode/
 .vscode/tasks.sh update  # Needs to be run once to generate settings.json
 ```
 
