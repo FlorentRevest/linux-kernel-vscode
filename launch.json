@@ -13,13 +13,13 @@
       "setupCommands": [
         {
           "description": "Give some time for the VM to spin-up",
-          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": false,
         },
       ],
 
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceRoot}/vmlinux",
+      "program": "${workspaceFolder}/vmlinux",
 
       "hardwareBreakpoints": { "require": true },
     },
@@ -35,13 +35,13 @@
       "setupCommands": [
         {
           "description": "Give some time for the VM to spin-up",
-          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": true
         },
       ],
 
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceRoot}/vmlinux",
+      "program": "${workspaceFolder}/vmlinux",
 
       "hardwareBreakpoints": {
         "require": true,
@@ -58,13 +58,13 @@
       "setupCommands": [
         {
           "description": "Wait for the VM to spin-up",
-          "text": "-interpreter-exec console \"shell ${workspaceRoot}/.vscode/tasks.sh wait-for-vm\"",
+          "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": false,
         },
       ],
 
       "cwd": "${workspaceFolder}",
-      "program": "${workspaceRoot}/vmlinux",
+      "program": "${workspaceFolder}/vmlinux",
 
       "hardwareBreakpoints": { "require": true },
     }
