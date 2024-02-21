@@ -269,7 +269,7 @@ EOF
       exit 0
     fi
 
-    clang --target=${CLANG_TARGET} autostart.c -o ${BUILT_AUTOSTART}
+    clang --target=${CLANG_TARGET} `cat compile_flags.txt` autostart.c -o ${BUILT_AUTOSTART}
 
     echo Installing autostart on `basename ${IMAGE_PATH}`
     guestfish --rw -a "${IMAGE_PATH}" << EOF
