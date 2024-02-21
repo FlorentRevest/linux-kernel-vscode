@@ -16,6 +16,11 @@
           "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": false,
         },
+        {
+          "description": "Enable autoloading of Linux GDB scripts",
+          "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
+          "ignoreFailures": true,
+        },
       ],
 
       "cwd": "${workspaceFolder}",
@@ -37,6 +42,11 @@
           "description": "Give some time for the VM to spin-up",
           "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": true
+        },
+        {
+          "description": "Enable autoloading of Linux GDB scripts",
+          "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
+          "ignoreFailures": true,
         },
       ],
 
@@ -60,6 +70,11 @@
           "description": "Wait for the VM to spin-up",
           "text": "-interpreter-exec console \"shell ${workspaceFolder}/.vscode/tasks.sh wait-for-vm\"",
           "ignoreFailures": false,
+        },
+        {
+          "description": "Enable autoloading of Linux GDB scripts",
+          "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
+          "ignoreFailures": true,
         },
       ],
 
