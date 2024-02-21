@@ -35,9 +35,13 @@
 *   Integrated IPython notebook for ftrace analysis
 *   BPF selftests cross-compilation and run tasks
 
+**Syzkaller:**
+
+*   Straightforward setup to test syzkaller fuzzer descriptions
+*   Integrated IPython notebook to reproduce [syzbot](https://syzkaller.appspot.com/upstream) bugs
+
 **Other:**
 
-*   Integrated IPython notebook to reproduce [syzbot](https://syzkaller.appspot.com/upstream) bugs
 *   Transparent remote development from a laptop
 *   Setup that is easy to modify (bash scripts) and contribute to
 *   Easy to update

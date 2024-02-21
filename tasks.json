@@ -130,6 +130,14 @@
     {
       "label": "Update linux-kernel-vscode setup",
       "args": ["update"],
+    },
+    {
+      "label": "Ensure that KCOV is enabled",
+      "args": ["enable-kcov"],
+    },
+    {
+      "label": "Fuzz the kernel in the virtual machine",
+      "args": ["fuzz"],
     }
   ]
 }

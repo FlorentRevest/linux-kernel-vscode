@@ -37,3 +37,9 @@
 ## Add some args to the kernel cmdline when using the "start" task
 ## E.g.: Boot straight into a syzbot reproducer
 # KERNEL_CMDLINE_EXTRA=init=/root/syzbot-repro
+
+## Only fuzz the /dev/ptmx ioctls
+# SYZ_MANAGER_CFG_EXTRA='"enable_syscalls": [ "openat$ptmx", "ioctl$*" ],'
+
+## Fuzz as an unprivileged user
+# SYZ_MANAGER_CFG_EXTRA='"sandbox": "setuid",'

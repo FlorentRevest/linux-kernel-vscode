@@ -61,6 +61,8 @@ done
 : ${SUCCESSFUL_EXIT_COMMAND:=""}
 : ${BPF_SELFTESTS_DIR:="${WORKSPACE_DIR}/tools/testing/selftests/bpf"}
 : ${VM_START_ARGS:=''}
+: ${SYZ_MANAGER_CFG_EXTRA:=''}
+: ${SYZKALLER_DIR:="${SCRIPT_DIR}/syzkaller/"}
 : ${KERNEL_CMDLINE_EXTRA:=''}
 : ${SPINNER:=1}
 : ${IMAGE_DIR:="${HOME}/.linux-kernel-vscode"}
@@ -81,6 +83,7 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
   : ${QEMU_BIN:="qemu-system-x86_64"}
   : ${QEMU_CMD:="${QEMU_BIN} -enable-kvm -cpu host -machine q35"}
   : ${SERIAL_TTY:="ttyS0"}
+  : ${SYZKALLER_TARGETARCH:="amd64"}
 elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${VMLINUX:="Image"}
   : ${CLANG_TARGET:="aarch64-linux-gnu"}
@@ -90,6 +93,7 @@ elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${QEMU_CMD:="${QEMU_BIN} -cpu max -machine virt"}
   : ${SERIAL_TTY:="ttyAMA0"}
   : ${PROOT_ARGS:="-q qemu-aarch64-static"}
+  : ${SYZKALLER_TARGETARCH:="arm4"}
 else
   echo "Unsupported TARGET_ARCH:" $TARGET_ARCH
   exit 2
@@ -338,6 +342,48 @@ EOF
     else
       echo -e "\e[31mOpen a test in ${BPF_SELFTESTS_DIR}/prog_tests/\e[0m"
     fi
+    ;;
+# Fuzzing
+  "enable-kcov")
+    depend_on defconfig
+    if grep -q -F "CONFIG_KCOV=y" .config; then
+      echo KCOV is already enabled
+    else
+      echo Enabling KCOV...
+      scripts/config -e KCOV -e KCOV_ENABLE_COMPARISONS
+      eval ${MAKE} ARCH=${TARGET_ARCH} olddefconfig
+
+      echo Rebuilding the kernel with KCOV...
+      ${SCRIPT} build
+    fi
+    ;;
+  "fuzz")
+    depend_on enable-kcov
+
+    if [ ! -d "${SYZKALLER_DIR}" ] ; then
+      git clone https://github.com/google/syzkaller ${SYZKALLER_DIR}
+    fi
+    make -C ${SYZKALLER_DIR} TARGETARCH=${SYZKALLER_TARGETARCH} manager fuzzer execprog executor
+
+    cat > /tmp/syz-manager.cfg << EOF
+{
+    "target": "linux/${SYZKALLER_TARGETARCH}",
+    "http": "0.0.0.0:56741",
+    "sshkey": "${SSH_KEY}",
+    "workdir": "${SCRIPT_DIR}/syzkaller-workdir",
+    "kernel_obj": "${WORKSPACE_DIR}",
+    "syzkaller": "${SYZKALLER_DIR}",
+    "type": "isolated",
+    "reproduce": false,
+    ${SYZ_MANAGER_CFG_EXTRA}
+    "vm": {
+        "targets": [ "127.0.0.1:5555" ],
+        "target_dir": "/root/fuzzing/",
+        "target_reboot": false
+    }
+}
+EOF
+    ${SYZKALLER_DIR}/bin/syz-manager -config /tmp/syz-manager.cfg
     ;;
 # linux-kernel-vscode pull
   "update")
