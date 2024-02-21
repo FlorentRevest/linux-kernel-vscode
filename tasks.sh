@@ -125,8 +125,7 @@ fi
     -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:22 \
     -virtfs local,path=/,mount_tag=hostfs,security_model=none,multidevs=remap \
     -append \"console=${SERIAL_TTY},115200 root=/dev/sda rw nokaslr init=/lib/systemd/systemd debug systemd.log_level=info ${KERNEL_CMDLINE_EXTRA}\" \
-    -drive if=none,id=hd,file=${IMAGE_PATH},format=raw -device virtio-scsi-pci,id=scsi -device scsi-hd,drive=hd \
-    -kernel ${KERNEL_PATH} ${VM_START_ARGS}"}
+    -drive file=${IMAGE_PATH},format=raw -kernel ${KERNEL_PATH} ${VM_START_ARGS}"}
 
 case "${COMMAND}" in
 # Virtual machine life-cycle
