@@ -111,6 +111,8 @@ workspace extensions, install them all. Here is what they do:
     facilitates sending patches or series to the list.
 *   [Syzlang](https://marketplace.visualstudio.com/items?itemName=florent-revest.vscode-syzlang)
     highlights syzkaller syscall descriptions.
+*   [Syzkaller coverage](https://marketplace.visualstudio.com/items?itemName=florent-revest.syzkaller-coverage)
+    can highlight lines covered by a running instance of syz-manager fuzzing.
 *   [Microsoft C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
     only the GDB integration of this plugin is used, every features interacting
     with the code is disabled in favor of Clangd which works much better.
