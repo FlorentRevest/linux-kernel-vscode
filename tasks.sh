@@ -252,6 +252,30 @@ mkdir /run/sshd/
 setsid /sbin/getty -l /bin/bash -n 115200 ${SERIAL_TTY}
 EOF
       chmod +x ${img_bind_mnt}/sbin/init-minimal
+      cat << EOF > ${img_bind_mnt}/etc/bash.bashrc
+# Use a green or red prompt depending on the previous command's exit value
+__prompt () {
+   if [[ $? = "0" ]]; then
+     PS1='\[\033[01;32m\]'
+   else
+     PS1='\[\033[01;31m\]'
+  fi
+  PS1="$PS1\u@\h:\w\$ \[\033[00m\]"
+}
+PROMPT_COMMAND=__prompt
+
+# On the serial tty, ask the host terminal for dimensions before each command
+__resize () {
+  local escape r c
+  IFS='[;' read -t 1 -sd R -p "$(printf '\e7\e[r\e[999;999H\e[6n\e8')" escape r c
+  if [[ "$r" -gt 0 && "$c" -gt 0 ]]; then
+    stty cols $c rows $r
+  fi
+}
+if [[ $TERM = "vt102" ]]; then
+  trap __resize DEBUG
+fi
+EOF
 
       # Atomically make the rootfs file available to unblock wait-for-vm tasks
       sync
