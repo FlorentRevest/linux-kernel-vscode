@@ -238,6 +238,10 @@ cat /etc/hostname > /proc/sys/kernel/hostname
 ip link set eth0 up
 dhclient eth0
 
+# Change cwd to /root
+HOME=/root
+cd $HOME
+
 # Start the SSH server
 mkdir /run/sshd/
 /usr/sbin/sshd
