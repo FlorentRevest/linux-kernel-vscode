@@ -3,8 +3,7 @@ Description=Autostart
 
 [Service]
 Type=idle
-ExecStartPre=/usr/bin/autostart.sh
-ExecStart=/usr/bin/autostart
+ExecStart=/usr/bin/autostart.sh
 StandardOutput=journal+console
 StandardError=journal+console
 

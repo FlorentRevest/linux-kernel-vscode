@@ -238,8 +238,7 @@ dhclient eth0
 mkdir /run/sshd/
 /usr/sbin/sshd
 
-# Start autostart scripts if there are any
-[ -f /usr/bin/autostart ]    && /usr/bin/autostart    &
+# Start the autostart script if there is one
 [ -f /usr/bin/autostart.sh ] && /usr/bin/autostart.sh &
 
 # Set up the serial line and get to a bash prompt

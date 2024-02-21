@@ -5,3 +5,5 @@ echo-green() {
 }
 
 # echo-green "Hello from autostart.sh"
+
+/usr/bin/autostart
