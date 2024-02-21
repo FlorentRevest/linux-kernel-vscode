@@ -207,7 +207,7 @@ case "${COMMAND}" in
           --create-with-perms=0644,ud+X:gd-rwX:od-rwX ${img_mnt} ${img_bind_mnt}
 
       # Debian rootfs generation and config setting
-      sudo mmdebstrap --include ssh,acpid,acpi-support-base,gdb,systemtap \
+      sudo mmdebstrap --include ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,bpftool,bpftrace,trace-cmd \
           --arch ${DEBIAN_TARGET_ARCH} unstable ${img_mnt}
       echo "debian-vm" > ${img_bind_mnt}/etc/hostname
       echo "nameserver 8.8.8.8" > ${img_bind_mnt}/etc/resolv.conf
