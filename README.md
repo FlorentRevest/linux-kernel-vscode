@@ -36,6 +36,8 @@
 *   BPF selftests cross-compilation and run tasks
 *   Ctrl-Click addresses like `__sys_sendmsg+0x284/0x370` in your backtraces and
     they will automatically get resolved by `addr2line`
+*   Easy systemtap probing (right click -> "Trace this function") and logging
+    with deep argument inspection (logs buffer opens immediately on logs)
 
 **Syzkaller:**
 
@@ -57,7 +59,7 @@ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microso
 sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 sudo apt update
-sudo apt install code gdb-multiarch ccache clang clangd llvm lld libguestfs-tools libssl-dev trace-cmd python3-pip jsonnet libelf-dev bison bindfs mmdebstrap proot
+sudo apt install code gdb-multiarch ccache clang clangd llvm lld libguestfs-tools libssl-dev trace-cmd python3-pip jsonnet libelf-dev bison bindfs mmdebstrap proot systemtap
 pip install lisa-linux
 ```
 
@@ -118,6 +120,11 @@ workspace extensions, install them all. Here is what they do:
     highlights syzkaller syscall descriptions.
 *   [Syzkaller coverage](https://marketplace.visualstudio.com/items?itemName=florent-revest.syzkaller-coverage)
     can highlight lines covered by a running instance of syz-manager fuzzing.
+*   [SystemTap Assistant](https://marketplace.visualstudio.com/items?itemName=florent-revest.systemtap-assistant)
+    facilitates kernel functions or lines tracing by dynamically generating
+    systemtap scripts and rendering logs received from these probes in a buffer.
+*   [SystemTap](https://marketplace.visualstudio.com/items?itemName=nzh21.systemtap-syntax)
+    highlights systemtap scripts.
 *   [Microsoft C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
     only the GDB integration of this plugin is used, every features interacting
     with the code is disabled in favor of Clangd which works much better.

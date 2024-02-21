@@ -67,6 +67,7 @@ done
 : ${SPINNER:=1}
 : ${IMAGE_DIR:="${HOME}/.linux-kernel-vscode"}
 : ${IMAGE_PATH:="${IMAGE_DIR}/debian-${TARGET_ARCH}.img"}
+: ${TRACER_PATH:=".vscode/autostart/tracer.stp"}
 if [[ "$TERM_PROGRAM" == "vscode" ]]; then
   : ${CLEAR:=1}
 fi
@@ -183,6 +184,9 @@ case "${COMMAND}" in
     echo ${CMD}
     eval ${CMD} &
     spinner $!
+
+    # A tracer module may need to be re-built. Don't clear the above make logs.
+    CLEAR=0 $SCRIPT systemtap-build
     ;;
 # Rootfs management
   "create-rootfs")
@@ -204,7 +208,7 @@ case "${COMMAND}" in
           --create-with-perms=0644,ud+X:gd-rwX:od-rwX ${img_mnt} ${img_bind_mnt}
 
       # Debian rootfs generation and config setting
-      sudo mmdebstrap --include ssh,acpid,acpi-support-base,gdb \
+      sudo mmdebstrap --include ssh,acpid,acpi-support-base,gdb,systemtap \
           --arch ${DEBIAN_TARGET_ARCH} unstable ${img_mnt}
       echo "debian-vm" > ${img_bind_mnt}/etc/hostname
       echo "nameserver 8.8.8.8" > ${img_bind_mnt}/etc/resolv.conf
@@ -383,6 +387,22 @@ EOF
 }
 EOF
     ${SYZKALLER_DIR}/bin/syz-manager -config /tmp/syz-manager.cfg
+    ;;
+# Tracing
+  "systemtap-build")
+    if [ -f ${TRACER_PATH} ]; then
+      echo Re-building ${TRACER_PATH} ...
+      # Workaround the presence of mcount nops with PR15123_ASSUME_MFENTRY
+      # Skip the loading part of the pipeline with -p4. Use Guru mode with -g
+      # Workaround clang warnings (treated as errors) with -Wno-everything
+      PR15123_ASSUME_MFENTRY=1 stap -p4 -g -r ${WORKSPACE_DIR} -m tracer \
+        -B LLVM=1 -B CFLAGS_MODULE="-Wno-everything" ${TRACER_PATH} > /dev/null
+      # The guest doesn't know $WORKSPACE_DIR but it can hardcode /host/tmp/
+      echo Installing to /tmp/tracer.ko ...
+      mv tracer.ko /tmp/
+    else
+      rm -f /tmp/tracer.ko
+    fi
     ;;
 # linux-kernel-vscode pull
   "update")

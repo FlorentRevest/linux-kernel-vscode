@@ -83,5 +83,7 @@ std.extVar('old_settings') + {
   ],
   "trailing-spaces.highlightCurrentLine": false,
   "trailing-spaces.deleteModifiedLinesOnly": true,
-  "trailing-spaces.trimOnSave": true
+  "trailing-spaces.trimOnSave": true,
+  "systemtap-assistant.output": ".vscode/autostart/tracer.stp",
+  "systemtap-assistant.deploy-task": "Build systemtap tracer"
 }

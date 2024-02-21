@@ -138,6 +138,10 @@
     {
       "label": "Fuzz the kernel in the virtual machine",
       "args": ["fuzz"],
+    },
+    {
+      "label": "Build systemtap tracer",
+      "args": ["systemtap-build"],
     }
   ]
 }
