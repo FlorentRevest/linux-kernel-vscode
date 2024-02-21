@@ -21,6 +21,11 @@
           "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
           "ignoreFailures": true,
         },
+        {
+          "description": "Format Locals as HEX by default",
+          "text": "set output-radix 16",
+          "ignoreFailures": true,
+        },
       ],
 
       "cwd": "${workspaceFolder}",
@@ -46,6 +51,11 @@
         {
           "description": "Enable autoloading of Linux GDB scripts",
           "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
+          "ignoreFailures": true,
+        },
+        {
+          "description": "Format Locals as HEX by default",
+          "text": "set output-radix 16",
           "ignoreFailures": true,
         },
       ],
@@ -74,6 +84,11 @@
         {
           "description": "Enable autoloading of Linux GDB scripts",
           "text": "add-auto-load-safe-path ${workspaceFolder}/scripts/gdb",
+          "ignoreFailures": true,
+        },
+        {
+          "description": "Format Locals as HEX by default",
+          "text": "set output-radix 16",
           "ignoreFailures": true,
         },
       ],
