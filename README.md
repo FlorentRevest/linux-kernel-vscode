@@ -34,6 +34,8 @@
     views etc...)
 *   Integrated IPython notebook for ftrace analysis
 *   BPF selftests cross-compilation and run tasks
+*   Ctrl-Click addresses like `__sys_sendmsg+0x284/0x370` in your backtraces and
+    they will automatically get resolved by `addr2line`
 
 **Syzkaller:**
 
@@ -107,6 +109,9 @@ workspace extensions, install them all. Here is what they do:
 *   [Patchwork](https://marketplace.visualstudio.com/items?itemName=florent-revest.patchwork)
     view, apply and search patches from the
     [linux patchwork instance](https://patchwork.kernel.org/).
+*   [Addr2line](https://marketplace.visualstudio.com/items?itemName=florent-revest.addr2line)
+    lets users ctrl+click on addresses in backtraces and they get resolved into
+    lines of code.
 *   [Git send-email](https://marketplace.visualstudio.com/items?itemName=florent-revest.git-send-email)
     facilitates sending patches or series to the list.
 *   [Syzlang](https://marketplace.visualstudio.com/items?itemName=florent-revest.vscode-syzlang)
