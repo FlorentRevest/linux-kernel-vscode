@@ -60,7 +60,6 @@ sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 sudo apt update
 sudo apt install code gdb-multiarch ccache clang clangd llvm lld libguestfs-tools libssl-dev trace-cmd python3-pip jsonnet libelf-dev bison bindfs mmdebstrap proot systemtap
-pip install lisa-linux
 ```
 
 For VS Code to keep track of all the files in your kernel source tree:
@@ -182,7 +181,6 @@ the `Ctrl+P` dialog box):
 *   Find **more helper tasks** using `Ctrl+Shift+P`, search for `Run task` and
     then pick from the list (for example you can run menuconfig, create SSH
     sessions, update to the latest version of this setup etc).
-*   Use `.vscode/lisa.ipynb` to **analyze ftrace traces** in Python.
 *   **Interact with your VM** from an external terminal using
     commands such as `lkv start`, `lkv ssh`, `lkv stop` etc...
 
@@ -234,11 +232,6 @@ there).
     `kernel.org` cgit links from a file path and line. Individual developers can
     then customize per-workspace settings for their kernel trees while still
     benefiting from the defaults in the JSonnet file.
-*   `.vscode/lisa.ipynb` is a reference Jupyter notebook to analyze ftrace
-    records. It builds on [the LISA
-    framework](https://lisa-linux-integrated-system-analysis.readthedocs.io/en/master/)
-    and VSCode's excellent
-    [integration of notebooks](https://code.visualstudio.com/blogs/2021/11/08/custom-notebooks).
 *   `.vscode/syzbot.ipynb` is a reference Jupyter notebook to automate the
     repetitive aspects of reproducing a syzkaller bug. Every step along the way
     is guided.
