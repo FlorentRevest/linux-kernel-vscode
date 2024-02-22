@@ -121,8 +121,7 @@ fi
 
 # QEMU start command
 : ${VM_START:="${QEMU_CMD} -s -nographic -smp 4 -m 4G -qmp tcp:localhost:4444,server,nowait -serial mon:stdio \
-    -device virtio-rng-pci,max-bytes=1024,period=1000 \
-    -device virtio-net-pci,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:22 \
+    -net nic,model=virtio-net-pci -net user,hostfwd=tcp::5555-:22 \
     -virtfs local,path=/,mount_tag=hostfs,security_model=none,multidevs=remap \
     -append \"console=${SERIAL_TTY},115200 root=/dev/sda rw nokaslr init=/lib/systemd/systemd debug systemd.log_level=info ${KERNEL_CMDLINE_EXTRA}\" \
     -drive file=${IMAGE_PATH},format=raw -kernel ${KERNEL_PATH} ${VM_START_ARGS}"}
