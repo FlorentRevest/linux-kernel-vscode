@@ -183,8 +183,16 @@ case "${COMMAND}" in
     eval ${CMD} &
     spinner $!
 
-    # A tracer module may need to be re-built. Don't clear the above make logs.
+    # A gdb index may need to be re-generated. Don't clear the above make logs.
+    CLEAR=0 $SCRIPT gdb-index
+    # A tracer module may need to be re-built
     CLEAR=0 $SCRIPT systemtap-build
+    ;;
+  "gdb-index")
+    # Hitting a breakpoint is *much* faster if we pre-build a gdb symbol index
+    if ! readelf -S vmlinux | grep -q ".gdb_index"; then
+      GDB=gdb-multiarch gdb-add-index vmlinux
+    fi
     ;;
 # Rootfs management
   "create-rootfs")
