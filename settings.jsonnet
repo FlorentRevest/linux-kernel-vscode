@@ -41,7 +41,7 @@ std.extVar('old_settings') + {
   "editor.detectIndentation": false,
   "editor.tabSize": 8,
   "editor.insertSpaces": false,
-  "editor.rulers": [80, 100]],
+  "editor.rulers": [80, 100],
   "files.associations": {
     "**/x86/**/*.S": "asm-intel-x86-generic",
     "**/arch/x86/entry/calling.h": "asm-intel-x86-generic",
