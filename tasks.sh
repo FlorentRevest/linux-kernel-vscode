@@ -455,8 +455,14 @@ EOF
       # Seed JSonnet with empty object
       echo "{}" > "settings.json"
     fi
+    if [ ! -e "settings-extra.json" ]; then
+      # Seed JSonnet with empty object
+      echo "{}" > "settings-extra.json"
+    fi
     tmp="$(mktemp --suffix=.json)"
-    jsonnet settings.jsonnet --ext-code-file old_settings="settings.json" > "${tmp}"
+    jsonnet settings.jsonnet \
+      --ext-code-file old_settings="settings.json" \
+      --ext-code-file extra_settings="settings-extra.json" > "${tmp}"
     mv "$tmp" settings.json
     ;;
   *)

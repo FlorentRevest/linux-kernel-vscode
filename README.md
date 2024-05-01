@@ -173,7 +173,8 @@ the `Ctrl+P` dialog box):
 *   Customize per-workspace VS-Code settings the normal way (edit local
     `.vscode/settings.json`, or use `Ctrl+Shift+P` -> "Preferences: Open
     Settings (UI)"). Note that fields that exist in `settings.jsonnet` will get
-    overwritten when you run the `update` task. Also, comments in your
+    overwritten when you run the `update` task. If needed, extra settings can be
+    added in `.vscode/settings-extra.json` file. Also, comments in your
     `.vscode/settings.json` will get deleted.
 *   **Autostart** commands or codes at VM start time by modifying the content of
     `.vscode/autostart/` (eg: always run tests that exercise the kernel
