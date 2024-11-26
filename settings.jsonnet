@@ -1,9 +1,12 @@
 // This is a jsonnet file, to evaluate it on the command-line use
 //
-// jsonnet --ext-code-file old_settings=<path to old settings> <path to this file>
+// jsonnet \
+//   --ext-code-file old_settings=<path to old settings> \
+//   --ext-code-file extra_settings=<path to extra settings> \
+//   <path to this file>
 //
 // JSonnet is a superset of JSON. Here we are using a minimal subset of
-// JSonnet's extra freatures, see the "External Variables" and "Object
+// JSonnet's extra features, see the "External Variables" and "Object
 // Orientation" section of jsonnet tutorials (plus we use comments).
 std.extVar('old_settings') + {
   "files.exclude": {
@@ -87,4 +90,4 @@ std.extVar('old_settings') + {
   "systemtap-assistant.output": ".vscode/autostart/tracer.stp",
   "systemtap-assistant.deploy-task": "Build systemtap tracer",
   "debug.onTaskErrors": "debugAnyway"
-}
+} + std.extVar('extra_settings')
