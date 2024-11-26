@@ -57,7 +57,7 @@ done
 : ${WORKSPACE_DIR:=`realpath -s "${SCRIPT_DIR}/.."`}
 : ${MAKE:="make -j`nproc` LLVM=1 LLVM_IAS=1 CC='ccache clang'"}
 : ${TARGET_ARCH:="x86_64"}
-: ${SILENT_BUILD_FLAG:="-s"}
+: ${SILENT_BUILD_FLAG="-s"}
 : ${SUCCESSFUL_EXIT_COMMAND:=""}
 : ${BPF_SELFTESTS_DIR:="${WORKSPACE_DIR}/tools/testing/selftests/bpf"}
 : ${VM_START_ARGS:=''}
