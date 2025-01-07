@@ -50,6 +50,12 @@
 *   Setup that is easy to modify (bash scripts) and contribute to
 *   Easy to update
 
+## LPC Talk
+
+This setup was presented at the Linux Plumbers 2023 conference. The slides can be found [here](https://lpc.events/event/17/contributions/1614/attachments/1210/2474/VSCode%20for%20kernel%20development.pdf) and the video below:
+
+[![VSCode for kernel development](https://img.youtube.com/vi/nmYaSqe0fGg/0.jpg)](https://www.youtube.com/watch?v=nmYaSqe0fGg)
+
 ## System-wide installation *(done once)*
 
 Install the dependencies required to run all the supported commands/tasks:
