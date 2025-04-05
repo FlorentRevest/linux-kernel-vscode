@@ -86,6 +86,7 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
   : ${SERIAL_TTY:="ttyS0"}
   : ${SYZKALLER_TARGETARCH:="amd64"}
   : ${ROOT_MNT:="/dev/sda"}
+  : ${CROSS_COMPILE:=""}
 elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${VMLINUX:="Image"}
   : ${CLANG_TARGET:="aarch64-linux-gnu"}
@@ -97,6 +98,7 @@ elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${PROOT_ARGS:="-q qemu-aarch64-static"}
   : ${SYZKALLER_TARGETARCH:="arm4"}
   : ${ROOT_MNT:="/dev/vda"}
+  : ${CROSS_COMPILE:="aarch64-linux-gnu-"}
 else
   echo "Unsupported TARGET_ARCH:" $TARGET_ARCH
   exit 2
@@ -180,7 +182,7 @@ case "${COMMAND}" in
     # Enable reproducible builds for ccache
     export KBUILD_BUILD_TIMESTAMP=""
     # Generate not only the kernel but also the clangd config
-    CMD="${MAKE} ${SILENT_BUILD_FLAG} ARCH=${TARGET_ARCH} all compile_commands.json"
+    CMD="${MAKE} ${SILENT_BUILD_FLAG} ARCH=${TARGET_ARCH} CROSS_COMPILE=${CROSS_COMPILE} all compile_commands.json"
     echo ${CMD}
     eval ${CMD} &
     spinner $!
