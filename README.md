@@ -65,7 +65,7 @@ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microso
 sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 sudo apt update
-sudo apt install code gdb-multiarch ccache clang clangd llvm lld libguestfs-tools libssl-dev trace-cmd python3-pip jsonnet libelf-dev bison bindfs mmdebstrap proot systemtap flex yacc bc debian-archive-keyring qemu-system-arm crossbuild-essential-arm64 qemu qemu-user-static binfmt-support
+sudo apt install code gdb-multiarch ccache clang clangd llvm lld libguestfs-tools libssl-dev trace-cmd python3-pip jsonnet libelf-dev bison bindfs mmdebstrap proot systemtap flex yacc bc debian-archive-keyring qemu-system-arm crossbuild-essential-arm64 qemu-user-static binfmt-support
 for fmt in aarch64 alpha arm armeb cris hexagon hppa loongarch64 m68k microblaze mips mipsel mipsn32 mipsn32el mips64 mips64el ppc ppc64 ppc64le riscv32 riscv64 s390x sh4 sh4eb sparc sparc32plus sparc64 xtensa xtensaeb; do
 	sudo update-binfmts --import qemu-$fmt;
 done
