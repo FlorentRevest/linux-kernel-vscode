@@ -10,7 +10,8 @@
 # export PATH=$HOME/qemu/bin/:$PATH
 
 ## Generate objects in a subdirectory
-# MAKE="$MAKE O=.vscode/build-$TARGET_ARCH/"
+# BUILD_DIR="build"
+# MAKE="$MAKE O=${BUILD_DIR}/"
 
 ## Enable some random kernel CONFIG by default as part of the .config generation
 # if [ $COMMAND = "defconfig" ]; then
