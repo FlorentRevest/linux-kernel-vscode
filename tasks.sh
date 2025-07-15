@@ -47,14 +47,9 @@ COMMAND=$1
 : ${SCRIPT:=`realpath -s "$0"`}
 : ${SCRIPT_DIR:=`dirname "${SCRIPT}"`}
 
-# Let the user override environment variables for their special needs
-files_to_source=$(find ${SCRIPT_DIR} -maxdepth 1 -xtype f -name "local*.sh")
-for file in $files_to_source; do
-  source "$file"
-done
-
 # Default context variables, can be overridden by local.sh or in environment.
 : ${WORKSPACE_DIR:=`realpath -s "${SCRIPT_DIR}/.."`}
+: ${BUILD_DIR:="${WORKSPACE_DIR}"}
 : ${MAKE:="make -j`nproc` LLVM=1 LLVM_IAS=1 CC='ccache clang'"}
 : ${TARGET_ARCH:="x86_64"}
 : ${SILENT_BUILD_FLAG="-s"}
@@ -74,6 +69,12 @@ fi
 if [[ $SKIP_SYSTEMD == 1 ]]; then
   KERNEL_CMDLINE_EXTRA="init=/sbin/init-minimal $KERNEL_CMDLINE_EXTRA"
 fi
+
+# Let the user override environment variables for their special needs
+files_to_source=$(find ${SCRIPT_DIR} -maxdepth 1 -xtype f -name "local*.sh")
+for file in $files_to_source; do
+  source "$file"
+done
 
 # Convenience environment variables derived from the context
 if [ "${TARGET_ARCH}" = "x86_64" ]; then
@@ -161,9 +162,9 @@ case "${COMMAND}" in
 # Kernel build
   "defconfig")
     # Only generate .config if it doesn't already exist
-    if [ ! -f ${WORKSPACE_DIR}/.config ]; then
+    if [ ! -f ${BUILD_DIR}/.config ]; then
       eval ${MAKE} ARCH=${TARGET_ARCH} defconfig kvm_guest.config
-      scripts/config --enable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+      scripts/config --file "${BUILD_DIR}/.config" --enable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
       eval ${MAKE} ARCH=${TARGET_ARCH} olddefconfig
     fi
     ;;
