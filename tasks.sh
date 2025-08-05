@@ -48,7 +48,7 @@ COMMAND=$1
 : ${SCRIPT_DIR:=`dirname "${SCRIPT}"`}
 
 # Let the user override environment variables for their special needs
-files_to_source=$(find ${SCRIPT_DIR} -maxdepth 1 -xtype f -name "local*.sh")
+files_to_source=$(find ${SCRIPT_DIR}/ -maxdepth 1 -xtype f -name "local*.sh")
 for file in $files_to_source; do
   source "$file"
 done
