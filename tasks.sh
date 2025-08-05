@@ -57,6 +57,7 @@ done
 : ${WORKSPACE_DIR:=`realpath -s "${SCRIPT_DIR}/.."`}
 : ${MAKE:="make -j`nproc` LLVM=1 LLVM_IAS=1 CC='ccache clang'"}
 : ${TARGET_ARCH:="x86_64"}
+: ${TARGET_GDB:="gdb-multiarch"}
 : ${SILENT_BUILD_FLAG="-s"}
 : ${SUCCESSFUL_EXIT_COMMAND:=""}
 : ${BPF_SELFTESTS_DIR:="${WORKSPACE_DIR}/tools/testing/selftests/bpf"}
@@ -193,7 +194,7 @@ case "${COMMAND}" in
   "gdb-index")
     # Hitting a breakpoint is *much* faster if we pre-build a gdb symbol index
     if ! readelf -S vmlinux | grep -q ".gdb_index"; then
-      OBJCOPY=llvm-objcopy GDB=gdb-multiarch gdb-add-index vmlinux
+      OBJCOPY=llvm-objcopy GDB=${TARGET_GDB} gdb-add-index vmlinux
     fi
     ;;
 # Rootfs management
