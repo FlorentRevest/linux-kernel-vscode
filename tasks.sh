@@ -216,8 +216,9 @@ case "${COMMAND}" in
           --create-with-perms=0644,ud+X:gd-rwX:od-rwX ${img_mnt} ${img_bind_mnt}
 
       # Debian rootfs generation and config setting
-      sudo mkosi --package=ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,vim,bpftool,bpftrace,trace-cmd,linux-perf \
-      --architecture=${MKOSI_TARGET_ARCH} --distribution=debian --release=unstable --output-dir=${img_mnt} --format=directory
+      sudo mkosi --architecture=${MKOSI_TARGET_ARCH} --distribution=debian --release=unstable --output-dir=${img_mnt} --format=directory \
+      --package=ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,vim,bpftool,bpftrace,trace-cmd,linux-perf \
+      --package=apt,less,login,iputils-ping,iproute2,cron,e2fsprogs,systemd-sysv,cpio,dhcpd,fdisk,udev,man
 
       # Move mkosi-generated rootfs from ${img_mnt}/image to ${img_mnt} to match script's expected directory structure
       sudo mv ${img_mnt}/image/* ${img_mnt} && sudo rmdir ${img_mnt}/image
