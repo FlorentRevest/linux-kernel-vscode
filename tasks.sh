@@ -79,7 +79,7 @@ fi
 if [ "${TARGET_ARCH}" = "x86_64" ]; then
   : ${VMLINUX:="bzImage"}
   : ${CLANG_TARGET:="x86_64-linux-gnu"}
-  : ${DEBIAN_TARGET_ARCH:="x86-64"}
+  : ${MKOSI_TARGET_ARCH:="x86-64"}
   : ${TOOLS_SRCARCH:="x86"}
   : ${QEMU_BIN:="qemu-system-x86_64"}
   : ${QEMU_CMD:="${QEMU_BIN} -enable-kvm -cpu host -machine q35 -bios qboot.rom"}
@@ -89,7 +89,7 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
 elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${VMLINUX:="Image"}
   : ${CLANG_TARGET:="aarch64-linux-gnu"}
-  : ${DEBIAN_TARGET_ARCH:="arm64"}
+  : ${MKOSI_TARGET_ARCH:="arm64"}
   : ${TOOLS_SRCARCH:="arm64"}
   : ${QEMU_BIN:="qemu-system-aarch64"}
   : ${QEMU_CMD:="${QEMU_BIN} -cpu max -machine virt"}
@@ -217,7 +217,7 @@ case "${COMMAND}" in
 
       # Debian rootfs generation and config setting
       sudo mkosi --package=ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,vim,bpftool,bpftrace,trace-cmd,linux-perf \
-      --architecture=${DEBIAN_TARGET_ARCH} --distribution=debian --release=unstable --output-dir=${img_mnt} --format=directory
+      --architecture=${MKOSI_TARGET_ARCH} --distribution=debian --release=unstable --output-dir=${img_mnt} --format=directory
 
       # Move mkosi-generated rootfs from ${img_mnt}/image to ${img_mnt} to match script's expected directory structure
       sudo mv ${img_mnt}/image/* ${img_mnt} && sudo rmdir ${img_mnt}/image
