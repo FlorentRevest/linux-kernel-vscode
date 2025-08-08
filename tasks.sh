@@ -80,7 +80,7 @@ fi
 if [ "${TARGET_ARCH}" = "x86_64" ]; then
   : ${VMLINUX:="bzImage"}
   : ${CLANG_TARGET:="x86_64-linux-gnu"}
-  : ${DEBIAN_TARGET_ARCH:="amd64"}
+  : ${MKOSI_TARGET_ARCH:="x86-64"}
   : ${TOOLS_SRCARCH:="x86"}
   : ${QEMU_BIN:="qemu-system-x86_64"}
   : ${QEMU_CMD:="${QEMU_BIN} -enable-kvm -cpu host -machine q35 -bios qboot.rom"}
@@ -90,7 +90,7 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
 elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${VMLINUX:="Image"}
   : ${CLANG_TARGET:="aarch64-linux-gnu"}
-  : ${DEBIAN_TARGET_ARCH:="arm64"}
+  : ${MKOSI_TARGET_ARCH:="arm64"}
   : ${TOOLS_SRCARCH:="arm64"}
   : ${QEMU_BIN:="qemu-system-aarch64"}
   : ${QEMU_CMD:="${QEMU_BIN} -cpu max -machine virt"}
@@ -217,8 +217,13 @@ case "${COMMAND}" in
           --create-with-perms=0644,ud+X:gd-rwX:od-rwX ${img_mnt} ${img_bind_mnt}
 
       # Debian rootfs generation and config setting
-      sudo mmdebstrap --include ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,vim,bpftool,bpftrace,trace-cmd,linux-perf \
-          --arch ${DEBIAN_TARGET_ARCH} unstable ${img_mnt}
+      sudo mkosi --architecture=${MKOSI_TARGET_ARCH} --distribution=debian --release=unstable --output-dir=${img_mnt} --format=directory \
+      --package=ssh,acpid,acpi-support-base,gdb,systemtap,file,psmisc,strace,vim,bpftool,bpftrace,trace-cmd,linux-perf \
+      --package=apt,less,login,iputils-ping,iproute2,cron,e2fsprogs,systemd-sysv,cpio,dhcpd,fdisk,udev,man
+
+      # Move mkosi-generated rootfs from ${img_mnt}/image to ${img_mnt} to match script's expected directory structure
+      sudo mv ${img_mnt}/image/* ${img_mnt} && sudo rmdir ${img_mnt}/image
+
       echo "debian-vm" > ${img_bind_mnt}/etc/hostname
       echo "nameserver 8.8.8.8" > ${img_bind_mnt}/etc/resolv.conf
       echo "hostfs /host 9p trans=virtio,rw,nofail 0 0" > ${img_bind_mnt}/etc/fstab
