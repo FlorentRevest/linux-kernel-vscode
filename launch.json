@@ -31,7 +31,7 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/vmlinux",
 
-      "hardwareBreakpoints": { "require": true },
+      "hardwareBreakpoints": { "require": true, "limit": 4 },
     },
     {
       "name": "Start and debug kernel in a VM from early-boot",
@@ -63,9 +63,7 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/vmlinux",
 
-      "hardwareBreakpoints": {
-        "require": true,
-      },
+      "hardwareBreakpoints": { "require": true, "limit": 4 },
     },
     {
       "name": "Debug kernel in an already-running VM",
@@ -96,7 +94,7 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceFolder}/vmlinux",
 
-      "hardwareBreakpoints": { "require": true },
+      "hardwareBreakpoints": { "require": true, "limit": 4 },
     }
   ]
 }
