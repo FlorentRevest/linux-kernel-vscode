@@ -96,7 +96,7 @@ elif [ "${TARGET_ARCH}" = "arm64" ]; then
   : ${QEMU_CMD:="${QEMU_BIN} -cpu max -machine virt"}
   : ${SERIAL_TTY:="ttyAMA0"}
   : ${PROOT_ARGS:="-q qemu-aarch64-static"}
-  : ${SYZKALLER_TARGETARCH:="arm4"}
+  : ${SYZKALLER_TARGETARCH:="arm64"}
   : ${ROOT_MNT:="/dev/vda"}
 else
   echo "Unsupported TARGET_ARCH:" $TARGET_ARCH
